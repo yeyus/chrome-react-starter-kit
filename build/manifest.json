@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Scanm.gr",
+  "short_name": "scanmgr",
+  "description": "",
+  "version": "0.0.1",
+  "minimum_chrome_version": "38",
+
+  "icons": {
+    "16": "icons/icon_16.png",
+    "128": "icons/icon_128.png"
+  },
+
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  }
+}
