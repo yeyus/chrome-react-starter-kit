@@ -1,7 +1,7 @@
 {
-  "name": "gulp.browserify",
-  "version": "1.0.0",
-  "description": "Browserify, Babel (6to5) & React example",
+  "name": "chrome-react-starter-kit",
+  "version": "0.1.0",
+  "description": "Browserify, Babel (6to5) & React in a chrome app starter kit",
   "main": "gulpfile.js",
   "scripts": {
     "start": "gulp"

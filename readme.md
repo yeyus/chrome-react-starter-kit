@@ -1,88 +1,28 @@
-#BrowserSync - Browserify, Babel (6to5) &amp; React example
+#Chrome React App Starter Kit
 
 ## Installation/Usage:
 
-To try this example, follow these 4 simple steps. 
+1. Clone this repo
+    ```bash
+    $ git clone https://github.com/yeyus/chrome-react-starter-kit.git
+    ```
 
-**Step 1**: Clone this entire repo
-```bash
-$ git clone https://github.com/BrowserSync/recipes.git bs-recipes
-```
+2. Install dependencies
+    ```bash
+    $ npm install
+    ```
 
-**Step 2**: Move into the directory containing this example
-```bash
-$ cd bs-recipes/recipes/gulp.browserify
-```
+3. Run the example
+    ```bash
+    $ gulp
+    ```
 
-**Step 3**: Install dependencies
-```bash
-$ npm install
-```
-
-**Step 4**: Run the example
-```bash
-$ npm start
-```
+4. Chrome -> Extensions -> Load unpackaged extension -> ```build``` folder
 
 ### Additional Info:
 
+Based on:
+ * https://gist.github.com/TravelingTechGuy/9996733
+ * https://github.com/BrowserSync/recipes/tree/master/recipes/gulp.browserify
 
-
-This one is a beast. Write your React JSX code, in ES6, compiled by Browserify and auto-reload all devices
-when the compilation is complete.
-
-### Preview of `gulpfile.js`:
-```js
-var gulp         = require('gulp');
-var gutil        = require('gulp-util');
-var source       = require('vinyl-source-stream');
-var sixtofiveify = require('6to5ify');
-var reactify     = require('reactify');
-var watchify     = require('watchify');
-var browserify   = require('browserify');
-var browserSync  = require('browser-sync');
-
-// Input file.
-var bundler     = watchify(browserify('./app/js/app.jsx', watchify.args));
-
-// React JSX transform
-bundler.transform(reactify);
-
-// Babel, 6to5ify transform
-bundler.transform(sixtofiveify);
-
-// On updates recompile
-bundler.on('update', bundle);
-
-function bundle() {
-
-    gutil.log('Compiling JS...');
-
-    return bundler.bundle()
-        .on('error', function (err) {
-            gutil.log(err.message);
-            browserSync.notify("Browserify Error!");
-            this.emit("end");
-        })
-        .pipe(source('bundle.js'))
-        .pipe(gulp.dest('./app/js/dist'))
-        .pipe(browserSync.reload({stream: true, once: true}));
-}
-
-/**
- * Gulp task alias
- */
-gulp.task('bundle', function () {
-    return bundle();
-});
-
-/**
- * First bundle, then serve from the ./app directory
- */
-gulp.task('default', ['bundle'], function () {
-    browserSync({
-        server: "./app"
-    });
-});
-```
-
+This one is a beast. Write your React JSX code, in ES6, compiled by Browserify to create a Chrome App. It also includes gulp-sass.
