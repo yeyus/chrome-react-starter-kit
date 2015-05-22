@@ -87,12 +87,16 @@ gulp.task('lint', function() {
 });
 
 gulp.task('test', function(done) {
-  karma.start({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true
-  }, function() {
-    done();
-  });
+    karma.start({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, function() {
+        done();
+    });
+});
+
+gulp.task('test:watch', function(done) {
+    gulp.watch('./test/**/*.js', ['test']);
 });
 
 gulp.task('sass:watch', function () {
@@ -120,7 +124,7 @@ gulp.task('clean', function() {
 /**
  * First bundle, then serve from the ./app directory
  */
-gulp.task('default', ['lint','test','bundle','sass','sass:watch','copy'], function () {
+gulp.task('default', ['lint','test','test:watch','bundle','sass','sass:watch','copy'], function () {
     browserSync({
         server: "./build"
     });
