@@ -4,6 +4,11 @@
  * @see http://developer.chrome.com/apps/app.runtime.html
  * @see http://developer.chrome.com/apps/app.window.html
  */
+
+import utils from './utils';
+
+console.log(utils.remove([1,2,3], 2));
+
 chrome.app.runtime.onLaunched.addListener(function(launchData) {
   chrome.app.window.create(
     'index.html',

@@ -1,4 +1,6 @@
 var gulp         = require('gulp');
+var karma        = require('karma').server;
+var jshint       = require('gulp-jshint');
 var clean        = require('gulp-clean');
 var gutil        = require('gulp-util');
 var sass         = require('gulp-sass');
@@ -78,6 +80,21 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('./build/css'));
 });
 
+gulp.task('lint', function() {
+  return gulp.src('./app/js')
+    .pipe(jshint({ linter: require('jshint-jsx').JSXHINT }))
+    .pipe(jshint.reporter('default'));
+});
+
+gulp.task('test', function(done) {
+  karma.start({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, function() {
+    done();
+  });
+});
+
 gulp.task('sass:watch', function () {
     gulp.watch('./app/styles/**/*.scss', ['sass']);
 });
@@ -103,7 +120,7 @@ gulp.task('clean', function() {
 /**
  * First bundle, then serve from the ./app directory
  */
-gulp.task('default', ['bundle','sass','sass:watch','copy'], function () {
+gulp.task('default', ['lint','test','bundle','sass','sass:watch','copy'], function () {
     browserSync({
         server: "./build"
     });
