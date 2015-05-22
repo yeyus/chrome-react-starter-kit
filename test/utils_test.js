@@ -1,7 +1,7 @@
 'use strict'
 
 var expect = require('chai').expect;
-var utils = require('../app/js/utils');
+import utils from '../app/js/utils';
 
 describe("utils", function() {
   var arr;
@@ -9,7 +9,7 @@ describe("utils", function() {
   beforeEach(function() {
     arr = [3, 5, 6, 7];
   });
-  
+
   afterEach(function() {
     arr = null;
   });
