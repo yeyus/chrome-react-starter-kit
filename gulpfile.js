@@ -1,5 +1,5 @@
 var gulp         = require('gulp');
-var karma        = require('karma').server;
+var karma        = require('gulp-karma');
 var jshint       = require('gulp-jshint');
 var clean        = require('gulp-clean');
 var gutil        = require('gulp-util');
@@ -87,16 +87,15 @@ gulp.task('lint', function() {
 });
 
 gulp.task('test', function(done) {
-    karma.start({
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
-    }, function() {
-        done();
-    });
-});
-
-gulp.task('test:watch', function(done) {
-    gulp.watch('./test/**/*.js', ['test']);
+    return gulp.src('./test/**/*.js')
+        .pipe(karma({
+            configFile: 'karma.conf.js',
+            action: 'run'
+        }))
+        .on('error', function(err) {
+            // Make sure failed tests cause gulp to exit non-zero
+            throw err;
+        });
 });
 
 gulp.task('sass:watch', function () {
@@ -122,10 +121,16 @@ gulp.task('clean', function() {
 });
 
 /**
- * First bundle, then serve from the ./app directory
+ * First bundle, then serve from the ./build directory
  */
-gulp.task('default', ['lint','test','test:watch','bundle','sass','sass:watch','copy'], function () {
+gulp.task('default', ['lint','bundle','sass','sass:watch','copy'], function () {
     browserSync({
         server: "./build"
     });
+
+    return gulp.src('./test/**/*.js')
+        .pipe(karma({
+            configFile: 'karma.conf.js',
+            action: 'watch'
+        }));
 });

@@ -17,15 +17,10 @@ module.exports = function(config) {
       'test/**/*test.js'
     ],
 
-    browserify: {
-      debug: true
-    },
-
     // list of files to exclude
     exclude: [
       '**/*.swp'
     ],
-
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
